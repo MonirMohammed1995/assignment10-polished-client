@@ -17,13 +17,27 @@ const router = createBrowserRouter([
     Component: MainLayouts,
     errorElement: <Error404 />,
     children: [
-      { path: "/", element: <Home /> },
-      { path: "/login", element: <Login /> },
-      { path: "/register", element: <Register /> },
-      { path: "/all-plants", element: <AllPlants /> },
+      { 
+        path: "/", 
+        loader:()=>fetch('http://localhost:5500/plants'),
+        element: <Home /> 
+      },
+      { 
+        path: "/login", 
+        element: <Login /> 
+      },
+      { 
+        path: "/register", 
+        element: <Register /> 
+      },
+      { 
+        path: "/all-plants",
+        loader:()=>fetch('http://localhost:5500/plants'), 
+        element: <AllPlants /> 
+      },
       {
         path: "/add-plant",
-        element: <AddPlant />,
+        element: <PrivateRoute><AddPlant /></PrivateRoute>,
       },
       {
         path: "/my-plants",
@@ -31,7 +45,8 @@ const router = createBrowserRouter([
       },
       {
         path: "/plants/:id",
-        element: <PrivateRoute><PlantDetail /></PrivateRoute>,
+        loader:()=>fetch('http://localhost:5500/plants'),
+        element: <PlantDetail />,
       },
       {
         path: "/update-plant/:id",
