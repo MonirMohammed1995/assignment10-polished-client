@@ -41,12 +41,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/my-plants",
-        element: <PrivateRoute><MyPlants /></PrivateRoute>,
+        element: <MyPlants />,
       },
       {
         path: "/plants/:id",
         loader:()=>fetch('http://localhost:5500/plants'),
-        element: <PlantDetail />,
+        element: <PrivateRoute><PlantDetail /></PrivateRoute>,
       },
       {
         path: "/update-plant/:id",

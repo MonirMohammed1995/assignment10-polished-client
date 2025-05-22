@@ -1,11 +1,11 @@
 import React from "react";
-import { useLoaderData, Link } from "react-router-dom";
+import { useLoaderData, Link, useParams } from "react-router-dom";
 
 const PlantDetail = () => {
-  const plant = useLoaderData();
-
+    const{id}=useParams();
+  const plantData = useLoaderData();
+  const singlePlantDetails=plantData.find(plant=>plant._id==id)
   const {
-    _id,
     image,
     name,
     category,
@@ -16,12 +16,13 @@ const PlantDetail = () => {
     nextWateringDate,
     healthStatus,
     userName,
-  } = plant;
+  } = singlePlantDetails;
+  console.log(singlePlantDetails);
 
   return (
     <section className="bg-green-50 min-h-screen py-10 px-4">
       <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl overflow-hidden">
-        <div className="md:flex" key={_id}>
+        <div className="md:flex">
           <div className="md:w-1/2 bg-green-100">
             <img
               src={image}
@@ -30,7 +31,7 @@ const PlantDetail = () => {
             />
           </div>
           <div className="md:w-1/2 p-6 space-y-4">
-            <h2 className="text-3xl font-bold text-green-800">{plant.name}</h2>
+            <h2 className="text-3xl font-bold text-green-800">{name}</h2>
             <p className="text-gray-700">
               <strong>Category:</strong> {category}
             </p>
