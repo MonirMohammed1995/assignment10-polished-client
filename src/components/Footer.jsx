@@ -28,9 +28,9 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold text-lime-300 mb-3">Contact</h3>
           <ul className="text-gray-400 text-sm space-y-2">
-            <li>Email: <a href="mailto:support@plantcare.app" className="hover:text-lime-400">support@plantcare.app</a></li>
-            <li>Phone: +880 1234-567890</li>
-            <li>Dhaka, Bangladesh</li>
+            <li>Email: <a href="monirmdnayemsaju42@gmail.com" className="hover:text-lime-400">support@monisaju.com</a></li>
+            <li>Phone: +880 1645323387</li>
+            <li>Sylhet, Bangladesh</li>
           </ul>
         </div>
 
@@ -38,10 +38,10 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold text-lime-300 mb-3">Follow Us</h3>
           <div className="flex space-x-4 text-gray-400 text-xl">
-            <a href="#" className="hover:text-lime-400 transition"><FaFacebookF /></a>
-            <a href="#" className="hover:text-lime-400 transition"><FaTwitter /></a>
-            <a href="#" className="hover:text-lime-400 transition"><FaInstagram /></a>
-            <a href="#" className="hover:text-lime-400 transition"><FaGithub /></a>
+            <a href="https://www.facebook.com/monirmdnayemsaju42" target="_blank" className="hover:text-lime-400 transition"><FaFacebookF /></a>
+            <a href="https://x.com/" target="_blank" className="hover:text-lime-400 transition"><FaTwitter /></a>
+            <a href="https://www.instagram.com/monirmdnayemsaju42/" target="_blank" className="hover:text-lime-400 transition"><FaInstagram /></a>
+            <a href="https://github.com/MonirMohammed1995" target="_blank" className="hover:text-lime-400 transition"><FaGithub /></a>
           </div>
         </div>
 

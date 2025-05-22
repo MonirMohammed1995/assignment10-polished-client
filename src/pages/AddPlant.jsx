@@ -1,135 +1,92 @@
-import React, { useState, useCallback } from 'react';
-import { toast } from 'react-hot-toast';
-
-const initialFormState = {
-    image: '',
-    name: '',
-    category: '',
-    description: '',
-    careLevel: '',
-    wateringFrequency: '',
-    lastWateredDate: '',
-    nextWateringDate: '',
-    healthStatus: '',
-    userEmail: '',
-    userName: '',
-};
-
+import React from "react";
+import Swal from "sweetalert2";
 const AddPlant = () => {
-    const [formData, setFormData] = useState(initialFormState);
-    const [isSubmitting, setIsSubmitting] = useState(false);
-
-    const handleChange = useCallback((e) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
-    }, []);
-
-    const handleSubmit = async (e) => {
+    const handleSubmit=e=>{
         e.preventDefault();
-
-        try {
-            setIsSubmitting(true);
-
-            // Simulate API call
-            console.log('Submitted Data:', formData);
-            // await axios.post('/api/plants', formData); // <-- Uncomment when using API
-
-            toast.success('Plant added successfully!');
-            setFormData(initialFormState);
-        } catch (error) {
-            toast.error('Failed to add plant. Try again.');
-            console.error(error);
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
-
-    const renderInput = (name, placeholder, type = 'text') => (
-        <input
-            type={type}
-            name={name}
-            value={formData[name]}
-            onChange={handleChange}
-            placeholder={placeholder}
-            required
-            className="input"
-        />
-    );
-
-    return (
-        <div className="max-w-3xl mx-auto m-4 p-6 bg-white dark:bg-green-900 shadow-lg rounded-xl">
-            <h2 className="text-2xl font-bold text-green-700 dark:text-lime-200 mb-6 text-center">
-                Add a New Plant
-            </h2>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
+        const form=e.target;
+        const formData=new FormData(form);
+        const newPlant= Object.fromEntries(formData.entries())
+        console.log(newPlant);
+        // send coffee data to the db
+        fetch('http://localhost:5500/plants',{
+            method:'POST',
+            headers: {
+                'content-type':'application/json'
+            },
+            body:JSON.stringify(newPlant)
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            if(data.inserted){
+                Swal.fire({
+  position: "center",
+  icon: "success",
+  title: "Plant has been Added",
+  showConfirmButton: false,
+  timer: 1500
+});
+            }
+        })
+    }
+  return (
+    <div className="bg-green-200 p-6">
+      <div className="max-w-3xl mx-auto p-6 bg-white dark:bg-green-700 shadow-lg rounded-xl">
+        <h2 className="text-3xl font-bold mb-6 text-center">🌱 Plant Entry Form</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {renderInput('image', 'Image URL')}
-                    {renderInput('name', 'Plant Name')}
+                    <input type="text" name="image" placeholder="Image URL" required className="input" />
+                    <input type="text" name="name"  placeholder="Plant Name" required className="input" />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <select
-                        name="category"
-                        value={formData.category}
-                        onChange={handleChange}
-                        required
-                        className="input"
-                    >
+                    <select name="category" required className="input">
                         <option value="">Select Category</option>
-                        {['Succulent', 'Fern', 'Flowering', 'Bonsai', 'Tropical'].map((option) => (
-                            <option key={option} value={option}>{option}</option>
-                        ))}
+                        <option value="Succulent">Succulent</option>
+                        <option value="Fern">Fern</option>
+                        <option value="Flowering">Flowering</option>
+                        <option value="Bonsai">Bonsai</option>
+                        <option value="Tropical">Tropical</option>
                     </select>
 
-                    <select
-                        name="careLevel"
-                        value={formData.careLevel}
-                        onChange={handleChange}
-                        required
-                        className="input"
-                    >
+                    <select name="careLevel" required className="input">
                         <option value="">Select Care Level</option>
-                        {['Easy', 'Moderate', 'Difficult'].map((level) => (
-                            <option key={level} value={level}>{level}</option>
-                        ))}
+                        <option value="Easy">Easy</option>
+                        <option value="Moderate">Moderate</option>
+                        <option value="Difficult">Difficult</option>
                     </select>
                 </div>
 
-                <textarea
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    rows="3"
-                    placeholder="Plant Description"
-                    required
-                    className="input gap-12"
-                />
-
-                {renderInput('wateringFrequency', 'Watering Frequency (e.g., every 3 days)')}
-
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {renderInput('lastWateredDate', 'Last Watered Date', 'date')}
-                    {renderInput('nextWateringDate', 'Next Watering Date', 'date')}
+                    <textarea name="description" rows="3" placeholder="Plant Description" required className="input" />
+
+                    <textarea type="text" name="wateringFrequency" rows="3" placeholder="Watering Frequency (e.g., every 3 days)" required className="input" />
                 </div>
 
-                {renderInput('healthStatus', 'Health Status (e.g., Good, Wilting)')}
-
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {renderInput('userEmail', 'Your Email', 'email')}
-                    {renderInput('userName', 'Your Name')}
+                    <div className="flex flex-col">
+                        <label>Last Watered Date</label>
+                        <input type="date" name="lastWateredDate" required className="input" />
+                    </div>
+                    <div className="flex flex-col">
+                        <label>Next Watering Date</label>
+                        <input type="date" name="nextWateringDate" required className="input" />
+                    </div>
                 </div>
 
-                <button
-                    type="submit"
-                    className="bg-lime-600 hover:bg-lime-700 text-white font-semibold py-2 px-6 rounded-full transition"
-                    disabled={isSubmitting}
-                >
-                    {isSubmitting ? 'Submitting...' : 'Add Plant'}
+                <input type="text" name="healthStatus" placeholder="Health Status (e.g., Good, Wilting)" required className="input" />
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="email" name="userEmail" placeholder="Your Email" required className="input" />
+                    <input type="text" name="userName" placeholder="Your Name" required className="input" />
+                </div>
+
+                <button type="submit" className="bg-lime-600 hover:bg-lime-700 text-white font-semibold py-2 px-6 rounded-full transition">
+                    Add Plant
                 </button>
             </form>
-        </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default AddPlant;
