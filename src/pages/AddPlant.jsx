@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import app from "../firebase/firebase.config";
+import { Helmet } from "react-helmet";
 
 const auth = getAuth(app);
 
@@ -63,6 +64,9 @@ const AddPlant = () => {
 
   return (
     <div className="p-6 bg-green-200">
+      <Helmet>
+        <title>Add Plant Data</title>
+      </Helmet>
       <div className="max-w-3xl p-6 mx-auto shadow-lg dark:bg-green-800 rounded-xl">
         <h2 className="mb-6 text-3xl font-bold text-center">
           🌱 Plant Entry Form

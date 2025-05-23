@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -98,6 +99,9 @@ const UpdatePlant = () => {
 
   return (
     <div className="min-h-screen p-6 bg-green-100">
+      <Helmet>
+        <title>Update Information</title>
+      </Helmet>
       <div className="max-w-3xl p-6 mx-auto bg-green-800 shadow-lg rounded-xl">
         <h2 className="mb-6 text-3xl font-bold text-center text-white">
           🌿 Update Plant Information

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Banner from "../components/Banner";
 import { useLoaderData } from "react-router-dom";
 import PlantCard from "../components/PlantCard";
+import AllFeature from "../components/AllFeature";
+import { Helmet } from "react-helmet";
 
 const Home = () => {
   const plants = useLoaderData();
@@ -18,10 +20,14 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-green-50">
+    <div className="min-h-screen mx-auto bg-base-100 max-w-11/12">
+      <Helmet>
+        <title>Home</title>
+      </Helmet>
       {/* Hero Banner */}
       <Banner />
-
+      {/* All Feature */}
+      <AllFeature></AllFeature>
       {/* Section Header */}
       <section className="px-4 py-10 text-center">
         <h2 className="text-4xl font-bold text-green-800">🌿 New Arrivals</h2>
@@ -31,7 +37,7 @@ const Home = () => {
       </section>
 
       {/* Plant Cards */}
-      <section className="max-w-6xl px-4 pb-10 mx-auto">
+      <section className="px-8 pb-10 mx-auto max-w-8xl">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {displayedPlants.map((plant) => (
             <PlantCard key={plant._id} plant={plant} />

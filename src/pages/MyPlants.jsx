@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../context/AuthProvider";
 import Loader from "../components/Loader";
+import { Helmet } from "react-helmet";
 
 const MyPlants = () => {
   const { user } = useContext(AuthContext);
@@ -53,6 +54,9 @@ const MyPlants = () => {
 
   return (
     <section className="min-h-screen p-6 bg-green-50">
+      <Helmet>
+        <title>Plants Owner</title>
+      </Helmet>
       <div className="max-w-6xl mx-auto">
         <h2 className="mb-6 text-3xl font-bold text-green-800">My Plants</h2>
 

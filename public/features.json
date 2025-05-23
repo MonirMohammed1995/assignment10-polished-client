@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "title": "Plant Disease Treatment",
+    "description": "This involves addressing issues like fungal or bacterial infections with specific fungicides, bactericides, or other treatments. For example, using copper fungicides to treat blight or bacterial infections.",
+    "image": "https://i.postimg.cc/8PmK62n6/d-1.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Pest Control",
+    "description": "Controlling pests like aphids, mites, or scale insects using insecticides or other methods. For example, using soap solutions or neem oil to deter pests.",
+    "image": "https://i.postimg.cc/Hsd3dSss/d-6.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Fertilization",
+    "description": "Providing plants with essential nutrients, such as nitrogen, phosphorus, and potassium, through fertilizers. For example, using slow-release fertilizers to ensure a steady supply of nutrients.",
+    "image": "https://i.postimg.cc/Nfs8W5pK/d-5.webp"
+  },
+  {
+    "id": 4,
+    "title": "Watering",
+    "description": "Maintaining proper soil moisture levels to support healthy growth and prevent stress. For example, watering deeply but less frequently to encourage root development.",
+    "image": "https://i.postimg.cc/sDHWqKML/d-4.jpg"
+  },
+  {
+    "id": 5,
+    "title": "Pruning",
+    "description": "Removing dead or diseased branches, shaping plants, and promoting growth. For example, pruning shrubs to improve air circulation and light penetration.",
+    "image": "https://i.postimg.cc/JnT70YCV/d-3.jpg"
+  },
+  {
+    "id": 6,
+    "title": "Propagation",
+    "description": "Creating new plants from existing ones through techniques like cuttings, layering, or seeds. For example, propagating succulents by taking stem cuttings.",
+    "image": "https://i.postimg.cc/x8DQcwpZ/d-2.jpg"
+  }
+]

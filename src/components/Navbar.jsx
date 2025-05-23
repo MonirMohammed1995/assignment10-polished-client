@@ -1,85 +1,94 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider';
 import { getAuth, signOut } from 'firebase/auth';
 import app from '../firebase/firebase.config';
 import { toast } from 'react-hot-toast';
 import { Menu, X, Sun, Moon } from 'lucide-react';
-import useTheme from '../hooks/useTheme'; 
+import useTheme from '../hooks/useTheme';
 
 const auth = getAuth(app);
 
 const Navbar = () => {
   const { user } = useContext(AuthContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { theme, toggleTheme } = useTheme(); 
+  const { theme, toggleTheme } = useTheme();
+
+  useEffect(() => {
+    if (user) {
+      toast.success(`Welcome back, ${user.displayName || 'User'}!`);
+    }
+  }, [user]);
 
   const handleLogout = () => {
     signOut(auth)
-      .then(() => toast.success('Logged out successfully'))
-      .catch(() => toast.error('Logout failed'));
+      .then(() => {
+        toast.success('Logged out successfully');
+      })
+      .catch((error) => {
+        toast.error(`Logout failed: ${error.message}`);
+      });
   };
 
   const navLinks = (
-  <>
-    <NavLink
-      to="/"
-      className={({ isActive }) =>
-        `px-4 py-2 block rounded ${
-          isActive
-            ? 'bg-green-100 dark:bg-green-800 font-semibold'
-            : 'hover:bg-green-100 dark:hover:bg-green-800'
-        }`
-      }
-    >
-      Home
-    </NavLink>
+    <>
+      <NavLink
+        to="/"
+        className={({ isActive }) =>
+          `px-4 py-2 block rounded ${
+            isActive
+              ? 'bg-green-100 dark:bg-green-800 font-semibold'
+              : 'hover:bg-green-100 dark:hover:bg-green-800'
+          }`
+        }
+      >
+        Home
+      </NavLink>
 
-    <NavLink
-      to="/all-plants"
-      className={({ isActive }) =>
-        `px-4 py-2 block rounded ${
-          isActive
-            ? 'bg-green-100 dark:bg-green-800 font-semibold'
-            : 'hover:bg-green-100 dark:hover:bg-green-800'
-        }`
-      }
-    >
-      All Plants
-    </NavLink>
+      <NavLink
+        to="/all-plants"
+        className={({ isActive }) =>
+          `px-4 py-2 block rounded ${
+            isActive
+              ? 'bg-green-100 dark:bg-green-800 font-semibold'
+              : 'hover:bg-green-100 dark:hover:bg-green-800'
+          }`
+        }
+      >
+        All Plants
+      </NavLink>
 
-    {user && (
-      <>
-        <NavLink
-          to="/add-plant"
-          className={({ isActive }) =>
-            `px-4 py-2 block rounded ${
-              isActive
-                ? 'bg-green-100 dark:bg-green-800 font-semibold'
-                : 'hover:bg-green-100 dark:hover:bg-green-800'
-            }`
-          }
-        >
-          Add Plant
-        </NavLink>
+      {user && (
+        <>
+          <NavLink
+            to="/add-plant"
+            className={({ isActive }) =>
+              `px-4 py-2 block rounded ${
+                isActive
+                  ? 'bg-green-100 dark:bg-green-800 font-semibold'
+                  : 'hover:bg-green-100 dark:hover:bg-green-800'
+              }`
+            }
+          >
+            Add Plant
+          </NavLink>
 
-        <NavLink
-          to="/my-plants"
-          className={({ isActive }) =>
-            `px-4 py-2 block rounded ${
-              isActive
-                ? 'bg-green-100 dark:bg-green-800 font-semibold'
-                : 'hover:bg-green-100 dark:hover:bg-green-800'
-            }`
-          }
-        >
-          My Plants
-        </NavLink>
-      </>
-    )}
-  </>
-);
-
+          <NavLink
+            to="/my-plants"
+            className={({ isActive }) =>
+              `px-4 py-2 block rounded ${
+                isActive
+                  ? 'bg-green-100 dark:bg-green-800 font-semibold'
+                  : 'hover:bg-green-100 dark:hover:bg-green-800'
+              }`
+            }
+          >
+            My Plants
+          </NavLink>
+        </>
+      )}
+    </>
+  );
 
   return (
     <nav className="sticky top-0 z-50 text-gray-900 bg-white shadow dark:bg-gray-900 dark:text-white">
@@ -91,28 +100,52 @@ const Navbar = () => {
         <div className="items-center hidden gap-4 md:flex">
           {navLinks}
           {/* Theme Toggle */}
-          <button onClick={toggleTheme} className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
+          >
             {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
           </button>
 
           {user ? (
             <div className="flex items-center gap-2">
-              <img src={user.photoURL} alt="user" className="w-8 h-8 rounded-full" title={user.displayName} />
-              <button onClick={handleLogout} className="px-3 py-1 text-sm text-white bg-green-600 rounded hover:bg-green-700">
+              <img
+                src={user.photoURL || 'https://via.placeholder.com/150'}
+                alt="User"
+                className="w-8 h-8 rounded-full"
+                title={user.displayName || 'User'}
+              />
+              <button
+                onClick={handleLogout}
+                className="px-3 py-1 text-lg font-semibold text-white bg-green-600 rounded hover:bg-red-500"
+              >
                 LogOut
               </button>
             </div>
           ) : (
             <>
-              <Link to="/login" className="px-3 py-1 text-sm rounded hover:bg-green-100 dark:hover:bg-green-800">Login</Link>
-              <Link to="/register" className="px-3 py-1 text-sm rounded hover:bg-green-100 dark:hover:bg-green-800">Register</Link>
+              <Link
+                to="/login"
+                className="px-3 py-1 text-sm rounded hover:bg-green-100 dark:hover:bg-green-800"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="px-3 py-1 text-sm rounded hover:bg-green-100 dark:hover:bg-green-800"
+              >
+                Register
+              </Link>
             </>
           )}
         </div>
 
         {/* Mobile Hamburger */}
         <div className="flex items-center gap-3 md:hidden">
-          <button onClick={toggleTheme} className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
+          <button
+            onClick={toggleTheme}
+            className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
+          >
             {theme === 'light' ? <Moon size={22} /> : <Sun size={22} />}
           </button>
           <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -126,15 +159,33 @@ const Navbar = () => {
           {navLinks}
           {user ? (
             <div className="flex items-center gap-2">
-              <img src={user.image} alt="user" className="w-8 h-8 rounded-full" title={user.name} />
-              <button onClick={handleLogout} className="px-3 py-1 text-sm text-white bg-green-600 rounded hover:bg-green-700">
+              <img
+                src={user.photoURL || 'https://via.placeholder.com/150'}
+                alt="User"
+                className="w-8 h-8 rounded-full"
+                title={user.displayName || 'User'}
+              />
+              <button
+                onClick={handleLogout}
+                className="px-3 py-1 text-lg font-semibold text-white bg-green-600 rounded hover:bg-red-500"
+              >
                 LogOut
               </button>
             </div>
           ) : (
             <div className="flex flex-col gap-2">
-              <Link to="/login" className="px-3 py-1 text-sm rounded hover:bg-green-100 dark:hover:bg-green-800">Login</Link>
-              <Link to="/register" className="px-3 py-1 text-sm rounded hover:bg-green-100 dark:hover:bg-green-800">Register</Link>
+              <Link
+                to="/login"
+                className="px-3 py-1 text-sm rounded hover:bg-green-100 dark:hover:bg-green-800"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="px-3 py-1 text-sm rounded hover:bg-green-100 dark:hover:bg-green-800"
+              >
+                Register
+              </Link>
             </div>
           )}
         </div>

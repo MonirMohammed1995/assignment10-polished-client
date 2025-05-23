@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 import { useLoaderData, Link, useParams } from "react-router-dom";
 
 const PlantDetail = () => {
@@ -20,17 +21,20 @@ const PlantDetail = () => {
   console.log(singlePlantDetails);
 
   return (
-    <section className="bg-green-50 min-h-screen py-10 px-4">
-      <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl overflow-hidden">
+    <section className="min-h-screen px-4 py-10 bg-green-50">
+      <Helmet>
+        <title>Plant Details</title>
+      </Helmet>
+      <div className="max-w-4xl mx-auto overflow-hidden bg-white shadow-xl rounded-2xl">
         <div className="md:flex">
-          <div className="md:w-1/2 bg-green-100">
+          <div className="bg-green-100 md:w-1/2">
             <img
               src={image}
               alt={name}
-              className="w-full h-full object-cover rounded-l-2xl"
+              className="object-cover w-full h-full rounded-l-2xl"
             />
           </div>
-          <div className="md:w-1/2 p-6 space-y-4">
+          <div className="p-6 space-y-4 md:w-1/2">
             <h2 className="text-3xl font-bold text-green-800">{name}</h2>
             <p className="text-gray-700">
               <strong>Category:</strong> {category}
@@ -60,7 +64,7 @@ const PlantDetail = () => {
             <div className="pt-4">
               <Link
                 to="/all-plants"
-                className="inline-block bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-700 transition"
+                className="inline-block px-4 py-2 text-white transition bg-green-600 rounded-full hover:bg-green-700"
               >
                 Back to All Plants
               </Link>
