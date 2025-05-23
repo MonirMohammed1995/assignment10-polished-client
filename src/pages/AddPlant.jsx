@@ -1,7 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import app from "../firebase/firebase.config";
+
+const auth = getAuth(app);
 
 const AddPlant = () => {
+  const [userInfo, setUserInfo] = useState({ email: "", displayName: "" });
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserInfo({
+          email: user.email || "",
+          displayName: user.displayName || "",
+        });
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -56,19 +74,19 @@ const AddPlant = () => {
               name="image"
               placeholder="Image URL"
               required
-              className="p-2 border rounded w-full"
+              className="w-full p-2 border rounded"
             />
             <input
               type="text"
               name="name"
               placeholder="Plant Name"
               required
-              className="p-2 border rounded w-full"
+              className="w-full p-2 border rounded"
             />
           </div>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <select name="category" required className="p-2 border bg-green-600 rounded w-full">
+            <select name="category" required className="w-full p-2 bg-green-600 border rounded">
               <option value="">Select Category</option>
               <option value="Succulent">Succulent</option>
               <option value="Fern">Fern</option>
@@ -77,7 +95,7 @@ const AddPlant = () => {
               <option value="Tropical">Tropical</option>
             </select>
 
-            <select name="careLevel" required className="p-2 border bg-green-600 rounded w-full">
+            <select name="careLevel" required className="w-full p-2 bg-green-600 border rounded">
               <option value="">Select Care Level</option>
               <option value="Easy">Easy</option>
               <option value="Moderate">Moderate</option>
@@ -91,7 +109,7 @@ const AddPlant = () => {
               rows="3"
               placeholder="Plant Description"
               required
-              className="p-2 border rounded w-full"
+              className="w-full p-2 border rounded"
             />
 
             <textarea
@@ -99,7 +117,7 @@ const AddPlant = () => {
               rows="3"
               placeholder="Watering Frequency (e.g., every 3 days)"
               required
-              className="p-2 border rounded w-full"
+              className="w-full p-2 border rounded"
             />
           </div>
 
@@ -110,7 +128,7 @@ const AddPlant = () => {
                 type="date"
                 name="lastWateredDate"
                 required
-                className="p-2 border rounded w-full"
+                className="w-full p-2 border rounded"
               />
             </div>
             <div className="flex flex-col">
@@ -119,7 +137,7 @@ const AddPlant = () => {
                 type="date"
                 name="nextWateringDate"
                 required
-                className="p-2 border rounded w-full"
+                className="w-full p-2 border rounded"
               />
             </div>
           </div>
@@ -129,23 +147,23 @@ const AddPlant = () => {
             name="healthStatus"
             placeholder="Health Status (e.g., Good, Wilting)"
             required
-            className="p-2 border rounded w-full"
+            className="w-full p-2 border rounded"
           />
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <input
               type="email"
               name="userEmail"
-              placeholder="Your Email"
-              required
-              className="p-2 border rounded w-full"
+              value={userInfo.email}
+              readOnly
+              className="w-full p-2 bg-gray-600 border rounded cursor-not-allowed"
             />
             <input
               type="text"
               name="userName"
-              placeholder="Your Name"
-              required
-              className="p-2 border rounded w-full"
+              value={userInfo.displayName}
+              readOnly
+              className="w-full p-2 bg-gray-600 border rounded cursor-not-allowed"
             />
           </div>
 

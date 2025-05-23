@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import { AuthContext } from "../context/AuthProvider"; // Update path as needed
+import { AuthContext } from "../context/AuthProvider";
 import Loader from "../components/Loader";
 
 const MyPlants = () => {
@@ -11,10 +11,14 @@ const MyPlants = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5500/plants?userName=${user.email}`)
+      fetch(`http://localhost:5500/plants?email=${user.email}`)
         .then((res) => res.json())
         .then((data) => {
           setMyPlants(data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Failed to fetch user's plants:", error);
           setLoading(false);
         });
     }
@@ -23,7 +27,7 @@ const MyPlants = () => {
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      text: "You won’t be able to revert this!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#16a34a",
@@ -45,25 +49,26 @@ const MyPlants = () => {
     });
   };
 
-  if (loading) return <Loader></Loader> ;
+  if (loading) return <Loader />;
 
   return (
-    <section className="min-h-screen bg-green-50 p-6">
+    <section className="min-h-screen p-6 bg-green-50">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold text-green-800 mb-6">My Plants</h2>
+        <h2 className="mb-6 text-3xl font-bold text-green-800">My Plants</h2>
+
         {myPlants.length === 0 ? (
-          <p className="text-gray-600">You haven’t added any plants yet.</p>
+          <p className="text-gray-600">No plants found.</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {myPlants.map((plant) => (
               <div
                 key={plant._id}
-                className="bg-white rounded-xl shadow-md overflow-hidden"
+                className="overflow-hidden bg-white shadow-md rounded-xl"
               >
                 <img
                   src={plant.image}
                   alt={plant.name}
-                  className="h-48 w-full object-cover"
+                  className="object-cover w-full h-48"
                 />
                 <div className="p-4 space-y-2">
                   <h3 className="text-xl font-semibold text-green-700">
@@ -75,16 +80,20 @@ const MyPlants = () => {
                   <p className="text-gray-600">
                     <strong>Health:</strong> {plant.healthStatus}
                   </p>
+                  <p className="text-sm italic text-gray-600">
+                    Added by: {plant.userName} ({plant.userEmail})
+                  </p>
+
                   <div className="flex gap-2 pt-3">
                     <Link
                       to={`/update-plant/${plant._id}`}
-                      className="px-3 py-1 rounded bg-green-600 text-white hover:bg-green-700 text-sm"
+                      className="px-3 py-1 text-sm text-white bg-green-600 rounded hover:bg-green-700"
                     >
                       Update
                     </Link>
                     <button
                       onClick={() => handleDelete(plant._id)}
-                      className="px-3 py-1 rounded bg-red-600 text-white hover:bg-red-700 text-sm"
+                      className="px-3 py-1 text-sm text-white bg-red-600 rounded hover:bg-red-700"
                     >
                       Delete
                     </button>

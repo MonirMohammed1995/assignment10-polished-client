@@ -3,7 +3,8 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { FaGoogle } from 'react-icons/fa';
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import app from '../firebase/firebase.config'; // Adjust path as needed
+import { useLocation, useNavigate } from 'react-router-dom';
+import app from '../firebase/firebase.config';
 
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
@@ -15,12 +16,17 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const from = location.state?.from?.pathname || '/';
+
   // Email/Password Login
   const onSubmit = async (data) => {
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
       toast.success('Login successful!');
-      // navigate('/dashboard'); // Add navigation if using react-router
+      navigate(from, { replace: true }); // 🔁 redirect to original page
     } catch (error) {
       toast.error(error.message);
     }
@@ -31,15 +37,15 @@ const Login = () => {
     try {
       await signInWithPopup(auth, provider);
       toast.success('Google login successful!');
-      // navigate('/dashboard');
+      navigate(from, { replace: true }); // 🔁 redirect to original page
     } catch (error) {
       toast.error(error.message);
     }
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-lime-50 dark:bg-green-900 px-4 py-12">
-      <div className="w-full max-w-md bg-white dark:bg-green-950 shadow-xl rounded-xl p-8 space-y-6">
+    <section className="flex items-center justify-center min-h-screen px-4 py-12 bg-lime-50 dark:bg-green-900">
+      <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-xl dark:bg-green-950 rounded-xl">
         <h2 className="text-2xl font-bold text-center text-green-700 dark:text-lime-200">Login to Your Account</h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -52,7 +58,7 @@ const Login = () => {
               className={`input w-full ${errors.email ? 'border-red-500' : ''}`}
               placeholder="you@example.com"
             />
-            {errors.email && <p className="text-sm text-red-500 mt-1">{errors.email.message}</p>}
+            {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>}
           </div>
 
           {/* Password */}
@@ -67,12 +73,12 @@ const Login = () => {
               className={`input w-full ${errors.password ? 'border-red-500' : ''}`}
               placeholder="••••••••"
             />
-            {errors.password && <p className="text-sm text-red-500 mt-1">{errors.password.message}</p>}
+            {errors.password && <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>}
           </div>
 
           <button
             type="submit"
-            className="w-full bg-lime-600 hover:bg-lime-700 text-white font-semibold py-2 px-4 rounded-full transition"
+            className="w-full px-4 py-2 font-semibold text-white transition rounded-full bg-lime-600 hover:bg-lime-700"
           >
             Login
           </button>
@@ -88,15 +94,15 @@ const Login = () => {
         {/* Google Login */}
         <button
           onClick={handleGoogleLogin}
-          className="w-full flex items-center justify-center gap-2 border border-gray-300 dark:border-green-700 hover:border-lime-600 dark:hover:border-lime-500 text-sm font-medium py-2 px-4 rounded-full transition"
+          className="flex items-center justify-center w-full gap-2 px-4 py-2 text-sm font-medium transition border border-gray-300 rounded-full dark:border-green-700 hover:border-lime-600 dark:hover:border-lime-500"
         >
           <FaGoogle className="text-red-500" />
           Sign in with Google
         </button>
 
-        <p className="text-center text-sm text-gray-600 dark:text-gray-400 mt-4">
+        <p className="mt-4 text-sm text-center text-gray-600 dark:text-gray-400">
           Don’t have an account?
-          <a href="/register" className="text-lime-600 hover:underline ml-1">
+          <a href="/register" className="ml-1 text-lime-600 hover:underline">
             Register
           </a>
         </p>
