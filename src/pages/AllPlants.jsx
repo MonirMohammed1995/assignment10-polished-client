@@ -5,6 +5,11 @@ import { useLoaderData, Link } from "react-router-dom";
 const AllPlants = () => {
   const plants = useLoaderData();
 
+  // 🔽 Sort plants by nextWateringDate descending
+  const sortedPlants = [...plants].sort((a, b) => {
+    return new Date(b.nextWateringDate) - new Date(a.nextWateringDate);
+  });
+
   return (
     <section className="min-h-screen px-4 py-12 bg-green-50">
       <Helmet>
@@ -23,17 +28,21 @@ const AllPlants = () => {
                 <th scope="col" className="px-6 py-4 text-left">Plant Name</th>
                 <th scope="col" className="px-6 py-4 text-left">Category</th>
                 <th scope="col" className="px-6 py-4 text-left">Watering Frequency</th>
+                <th scope="col" className="px-6 py-4 text-left">Next Watering Date</th>
                 <th scope="col" className="px-6 py-4 text-center">Action</th>
               </tr>
             </thead>
             <tbody className="text-gray-700 bg-white divide-y divide-green-100">
-              {plants && plants.length > 0 ? (
-                plants.map(({ _id,image, name, category, wateringFrequency }) => (
+              {sortedPlants && sortedPlants.length > 0 ? (
+                sortedPlants.map(({ _id, image, name, category, wateringFrequency, nextWateringDate }) => (
                   <tr key={_id} className="transition hover:bg-green-50">
-                    <td className="px-6 py-4 font-medium"><img className="w-12 mx-auto" src={image} alt="" /></td>
+                    <td className="px-6 py-4 font-medium">
+                      <img className="w-12 mx-auto" src={image} alt={name} />
+                    </td>
                     <td className="px-6 py-4 font-medium">{name}</td>
                     <td className="px-6 py-4">{category}</td>
                     <td className="px-6 py-4">{wateringFrequency}</td>
+                    <td className="px-6 py-4">{nextWateringDate || "N/A"}</td>
                     <td className="px-6 py-4 text-center">
                       <Link
                         to={`/plants/${_id}`}
@@ -47,7 +56,7 @@ const AllPlants = () => {
               ) : (
                 <tr>
                   <td
-                    colSpan="4"
+                    colSpan="6"
                     className="px-6 py-10 italic text-center text-gray-500"
                   >
                     No plants found. Please add new plant entries.

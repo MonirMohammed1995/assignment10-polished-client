@@ -31,21 +31,17 @@ const Register = () => {
     const { name, email, password, photo } = data;
 
     const passwordValid =
-      /[A-Z]/.test(password) && /[a-z]/.test(password) && password.length >= 6;
+      /[A-Z]/.test(password) &&
+      /[a-z]/.test(password) &&
+      password.length >= 6;
 
     if (!passwordValid) {
-      toast.error(
-        "Password must contain uppercase, lowercase and be 6+ characters."
-      );
+      toast.error("Password must contain uppercase, lowercase and be 6+ characters.");
       return;
     }
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(userCredential.user, {
         displayName: name,
         photoURL: photo,
@@ -76,19 +72,12 @@ const Register = () => {
         <title>Registration Page</title>
       </Helmet>
       <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-xl dark:bg-green-950 rounded-xl">
-        <h2 className="text-2xl font-bold text-center text-green-700 dark:text-lime-200">
-          Create an Account
-        </h2>
+        <h2 className="text-2xl font-bold text-center text-green-700 dark:text-lime-200">Create an Account</h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Name */}
           <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-            >
-              Name
-            </label>
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
             <input
               id="name"
               type="text"
@@ -96,19 +85,12 @@ const Register = () => {
               className="w-full input"
               placeholder="Your name"
             />
-            {errors.name && (
-              <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>
-            )}
+            {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>}
           </div>
 
           {/* Email */}
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-            >
-              Email
-            </label>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
             <input
               id="email"
               type="email"
@@ -116,43 +98,25 @@ const Register = () => {
               className="w-full input"
               placeholder="you@example.com"
             />
-            {errors.email && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.email.message}
-              </p>
-            )}
+            {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>}
           </div>
 
           {/* Photo URL */}
           <div>
-            <label
-              htmlFor="image"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-            >
-              Photo URL
-            </label>
+            <label htmlFor="photo" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Photo URL</label>
             <input
-              id="image"
+              id="photo"
               type="url"
-              {...register("image", { required: "Photo URL is required" })}
+              {...register("photo", { required: "Photo URL is required" })}
               className="w-full input"
               placeholder="https://..."
             />
-            {errors.image && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.image.message}
-              </p>
-            )}
+            {errors.photo && <p className="mt-1 text-sm text-red-500">{errors.photo.message}</p>}
           </div>
 
           {/* Password with eye icon */}
           <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-            >
-              Password
-            </label>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
             <div className="relative">
               <input
                 id="password"
@@ -162,17 +126,13 @@ const Register = () => {
                 placeholder="••••••••"
               />
               <span
-                onClick={() => setShowPassword((prev) => !prev)}
+                onClick={() => setShowPassword(prev => !prev)}
                 className="absolute top-2.5 right-3 text-gray-500 cursor-pointer"
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
-            {errors.password && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.password.message}
-              </p>
-            )}
+            {errors.password && <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>}
           </div>
 
           {/* Register Button */}
@@ -202,9 +162,7 @@ const Register = () => {
 
         <p className="mt-4 text-sm text-center text-gray-600 dark:text-gray-400">
           Already have an account?{" "}
-          <a href="/login" className="text-lime-600 hover:underline">
-            Login
-          </a>
+          <a href="/login" className="text-lime-600 hover:underline">Login</a>
         </p>
       </div>
     </section>

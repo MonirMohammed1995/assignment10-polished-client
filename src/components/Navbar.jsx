@@ -99,7 +99,6 @@ const Navbar = () => {
 
         <div className="items-center hidden gap-4 md:flex">
           {navLinks}
-
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
