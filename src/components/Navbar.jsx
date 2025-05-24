@@ -92,7 +92,7 @@ const Navbar = () => {
 
   return (
     <nav className="sticky top-0 z-50 text-gray-900 bg-white shadow dark:bg-gray-900 dark:text-white">
-      <div className="flex items-center justify-between px-4 py-3 mx-auto max-w-7xl">
+      <div className="flex items-center justify-between px-3 py-3 mx-auto max-w-7xl">
         <Link to="/" className="text-2xl font-bold text-green-600 dark:text-green-400">
           🌱 PlantCare
         </Link>

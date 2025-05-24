@@ -16,7 +16,7 @@ const FeatureCard = ({ feature }) => {
         <img
           src={image}
           alt={title}
-          className="object-cover w-full h-full"
+          className="object-cover w-full"
           loading="lazy"
           decoding="async"
         />
