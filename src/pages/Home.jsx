@@ -4,6 +4,7 @@ import { useLoaderData } from "react-router-dom";
 import PlantCard from "../components/PlantCard";
 import AllFeature from "../components/AllFeature";
 import { Helmet } from "react-helmet";
+import PlantReviewCards from "../components/PlantReviewCards";
 
 const Home = () => {
   const plants = useLoaderData();
@@ -56,6 +57,9 @@ const Home = () => {
           </div>
         )}
       </section>
+      <div>
+        <PlantReviewCards></PlantReviewCards>
+      </div>
     </div>
   );
 };
