@@ -109,17 +109,16 @@ const Navbar = () => {
           </button>
 
           {user ? (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <img
                 src={user.photoURL || 'https://via.placeholder.com/150'}
                 alt="User"
                 className="w-8 h-8 rounded-full"
                 title={user.displayName || 'User'}
               />
-              <span className="hidden text-sm font-medium sm:inline">{user.displayName || 'User'}</span>
               <button
                 onClick={handleLogout}
-                className="px-3 py-1 text-sm font-semibold text-white bg-green-600 rounded hover:bg-red-500"
+                className="px-3 py-1 text-lg font-semibold text-white bg-green-600 rounded hover:bg-red-500"
               >
                 LogOut
               </button>
@@ -160,17 +159,16 @@ const Navbar = () => {
         <div className="px-4 pb-4 space-y-2 md:hidden">
           {navLinks}
           {user ? (
-            <div className="flex items-center gap-3 mt-2">
+            <div className="flex items-center gap-2">
               <img
                 src={user.photoURL || 'https://via.placeholder.com/150'}
                 alt="User"
                 className="w-8 h-8 rounded-full"
                 title={user.displayName || 'User'}
               />
-              <span className="text-sm font-medium">{user.displayName || 'User'}</span>
               <button
                 onClick={handleLogout}
-                className="px-3 py-1 text-sm font-semibold text-white bg-green-600 rounded hover:bg-red-500"
+                className="px-3 py-1 text-lg font-semibold text-white bg-green-600 rounded hover:bg-red-500"
               >
                 LogOut
               </button>

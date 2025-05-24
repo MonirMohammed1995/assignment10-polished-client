@@ -2,16 +2,10 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { FaGoogle, FaEye, FaEyeSlash } from 'react-icons/fa';
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-} from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import app from '../firebase/firebase.config';
 import { Helmet } from 'react-helmet';
-import Swal from 'sweetalert2'; // ✅ SweetAlert2 import
 
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
@@ -36,24 +30,7 @@ const Login = () => {
       toast.success('Login successful!');
       navigate(from, { replace: true });
     } catch (error) {
-      if (error.code === 'auth/user-not-found') {
-        Swal.fire({
-          icon: 'error',
-          title: 'User not found',
-          text: 'No account exists with this email. Would you like to register instead?',
-          showCancelButton: true,
-          confirmButtonText: 'Register',
-          cancelButtonText: 'Cancel',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            navigate('/register');
-          }
-        });
-      } else if (error.code === 'auth/wrong-password') {
-        toast.error('Incorrect password. Please try again.');
-      } else {
-        toast.error(error.message);
-      }
+      toast.error(error.message);
     }
   };
 
@@ -74,9 +51,7 @@ const Login = () => {
         <title>Login Page</title>
       </Helmet>
       <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-xl dark:bg-green-950 rounded-xl">
-        <h2 className="text-2xl font-bold text-center text-green-700 dark:text-lime-200">
-          Login to Your Account
-        </h2>
+        <h2 className="text-2xl font-bold text-center text-green-700 dark:text-lime-200">Login to Your Account</h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Email */}
