@@ -19,7 +19,7 @@ const router = createBrowserRouter([
     children: [
       { 
         path: "/", 
-        loader:()=>fetch('http://localhost:5500/plants'),
+        loader:()=>fetch('https://plantcare-tracker-server.vercel.app/plants'),
         element: <Home /> 
       },
       { 
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
       },
       { 
         path: "/all-plants",
-        loader:()=>fetch('http://localhost:5500/plants'), 
+        loader:()=>fetch('https://plantcare-tracker-server.vercel.app/plants'), 
         element: <AllPlants /> 
       },
       {
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/plants/:id",
-        loader:()=>fetch('http://localhost:5500/plants'),
+        loader:()=>fetch('https://plantcare-tracker-server.vercel.app/plants'),
         element: <PrivateRoute><PlantDetail /></PrivateRoute>,
       },
       {

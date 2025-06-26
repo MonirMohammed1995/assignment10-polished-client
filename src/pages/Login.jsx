@@ -6,6 +6,8 @@ import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopu
 import { useLocation, useNavigate } from 'react-router-dom';
 import app from '../firebase/firebase.config';
 import { Helmet } from 'react-helmet';
+import loginLottie from '../assets/lotties/login.json'
+import Lottie from 'lottie-react';
 
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
@@ -46,11 +48,13 @@ const Login = () => {
   };
 
   return (
-    <section className="flex items-center justify-center min-h-screen px-4 py-12 bg-lime-50 dark:bg-green-900">
+    <div className="flex items-center justify-center min-h-screen px-4 py-12 bg-lime-50 dark:bg-green-900">
       <Helmet>
         <title>Login Page</title>
       </Helmet>
-      <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-xl dark:bg-green-950 rounded-xl">
+      <div className='flex'>
+        <div className='w-full p-2 mt-10'><Lottie animationData={loginLottie} loop={true}/></div>
+        <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-xl dark:bg-green-950 rounded-xl">
         <h2 className="text-2xl font-bold text-center text-green-700 dark:text-lime-200">Login to Your Account</h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -107,7 +111,7 @@ const Login = () => {
         {/* Google Login */}
         <button
           onClick={handleGoogleLogin}
-          className="flex items-center justify-center w-full gap-2 px-4 py-2 text-sm font-medium transition border border-gray-300 rounded-full dark:border-green-700 hover:border-lime-600 dark:hover:border-lime-500"
+          className="flex items-center justify-center w-full gap-2 px-4 py-2 text-sm font-medium text-white transition border border-gray-300 rounded-full dark:border-green-700 hover:border-lime-600 dark:hover:border-lime-500"
         >
           <FaGoogle className="text-red-500" />
           Sign in with Google
@@ -120,7 +124,8 @@ const Login = () => {
           </a>
         </p>
       </div>
-    </section>
+      </div>
+    </div>
   );
 };
 

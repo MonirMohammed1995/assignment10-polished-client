@@ -12,7 +12,7 @@ const MyPlants = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5500/plants?email=${user.email}`)
+      fetch(`https://plantcare-tracker-server.vercel.app/plants?email=${user.email}`)
         .then((res) => res.json())
         .then((data) => {
           setMyPlants(data);
@@ -36,7 +36,7 @@ const MyPlants = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5500/plants/${id}`, {
+        fetch(`https://plantcare-tracker-server.vercel.app/plants/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())

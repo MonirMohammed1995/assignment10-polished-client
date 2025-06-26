@@ -5,12 +5,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBExeggac2MM2NOIRmSyOy9INZMkPz_opI",
-  authDomain: "plantecare-tracker-auth.firebaseapp.com",
-  projectId: "plantecare-tracker-auth",
-  storageBucket: "plantecare-tracker-auth.firebasestorage.app",
-  messagingSenderId: "912647859131",
-  appId: "1:912647859131:web:b32164205b874aefc1f29e"
+  apiKey: import.meta.env.VITE_apiKey,
+  authDomain: import.meta.env.VITE_authDomain,
+  projectId: import.meta.env.VITE_projectId,
+  storageBucket: import.meta.env.VITE_storageBucket,
+  messagingSenderId: import.meta.env.VITE_messagingSenderId,
+  appId: import.meta.env.VITE_appId
 };
 
 // Initialize Firebase

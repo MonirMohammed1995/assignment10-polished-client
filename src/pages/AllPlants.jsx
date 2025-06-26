@@ -46,7 +46,7 @@ const AllPlants = () => {
                     <td className="px-6 py-4 text-center">
                       <Link
                         to={`/plants/${_id}`}
-                        className="inline-block px-4 py-2 text-sm font-semibold text-white transition bg-green-600 rounded-full hover:bg-green-700"
+                        className="flex px-10 py-2 text-lg font-semibold text-white transition bg-green-600 rounded-full hover:bg-green-700"
                       >
                         View Details
                       </Link>

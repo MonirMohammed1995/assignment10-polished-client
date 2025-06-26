@@ -12,7 +12,7 @@ const UpdatePlant = () => {
   const [plant, setPlant] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:5500/plants/${id}`)
+    fetch(`https://plantcare-tracker-server.vercel.app/plants/${id}`)
       .then((res) => res.json())
       .then((data) => setPlant(data));
   }, [id]);
@@ -24,7 +24,7 @@ const UpdatePlant = () => {
     const updatedPlant = Object.fromEntries(formData.entries());
 
     try {
-      const res = await fetch(`http://localhost:5500/plants/${id}`, {
+      const res = await fetch(`https://plantcare-tracker-server.vercel.app/plants/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +73,7 @@ const UpdatePlant = () => {
 
     if (result.isConfirmed) {
       try {
-        const res = await fetch(`http://localhost:5500/plants/${id}`, {
+        const res = await fetch(`https://plantcare-tracker-server.vercel.app/plants/${id}`, {
           method: "DELETE",
         });
 

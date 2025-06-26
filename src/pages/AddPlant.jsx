@@ -29,7 +29,7 @@ const AddPlant = () => {
     console.log(newPlant);
 
     try {
-      const res = await fetch("http://localhost:5500/plants", {
+      const res = await fetch("https://plantcare-tracker-server.vercel.app/plants", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

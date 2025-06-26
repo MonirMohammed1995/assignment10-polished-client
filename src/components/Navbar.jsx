@@ -5,14 +5,23 @@ import { getAuth, signOut } from 'firebase/auth';
 import app from '../firebase/firebase.config';
 import { toast } from 'react-hot-toast';
 import { Menu, X, Sun, Moon } from 'lucide-react';
-import useTheme from '../hooks/useTheme';
 
 const auth = getAuth(app);
 
 const Navbar = () => {
   const { user } = useContext(AuthContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { theme, toggleTheme } = useTheme();
+
+  const [theme, setTheme] = useState('light');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
 
   useEffect(() => {
     if (user) {
@@ -37,8 +46,8 @@ const Navbar = () => {
         className={({ isActive }) =>
           `px-4 py-2 block rounded ${
             isActive
-              ? 'bg-green-100 dark:bg-green-800 font-semibold'
-              : 'hover:bg-green-100 dark:hover:bg-green-800'
+              ? 'bg-green-100 dark:bg-green-200 font-semibold rounded-full'
+              : 'hover:bg-green-100 dark:hover:bg-green-200 rounded-full'
           }`
         }
       >
@@ -50,8 +59,8 @@ const Navbar = () => {
         className={({ isActive }) =>
           `px-4 py-2 block rounded ${
             isActive
-              ? 'bg-green-100 dark:bg-green-800 font-semibold'
-              : 'hover:bg-green-100 dark:hover:bg-green-800'
+              ? 'bg-green-100 dark:bg-green-200 font-semibold rounded-full'
+              : 'hover:bg-green-100 dark:hover:bg-green-200 rounded-full'
           }`
         }
       >
@@ -63,12 +72,12 @@ const Navbar = () => {
           <NavLink
             to="/add-plant"
             className={({ isActive }) =>
-              `px-4 py-2 block rounded ${
-                isActive
-                  ? 'bg-green-100 dark:bg-green-800 font-semibold'
-                  : 'hover:bg-green-100 dark:hover:bg-green-800'
-              }`
-            }
+          `px-4 py-2 block rounded ${
+            isActive
+              ? 'bg-green-100 dark:bg-green-200 font-semibold rounded-full'
+              : 'hover:bg-green-100 dark:hover:bg-green-200 rounded-full'
+          }`
+        }
           >
             Add Plant
           </NavLink>
@@ -76,12 +85,12 @@ const Navbar = () => {
           <NavLink
             to="/my-plants"
             className={({ isActive }) =>
-              `px-4 py-2 block rounded ${
-                isActive
-                  ? 'bg-green-100 dark:bg-green-800 font-semibold'
-                  : 'hover:bg-green-100 dark:hover:bg-green-800'
-              }`
-            }
+          `px-4 py-2 block rounded ${
+            isActive
+              ? 'bg-green-100 dark:bg-green-200 font-semibold rounded-full'
+              : 'hover:bg-green-100 dark:hover:bg-green-200 rounded-full'
+          }`
+        }
           >
             My Plants
           </NavLink>
@@ -91,18 +100,20 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="sticky top-0 z-50 text-gray-900 bg-white shadow dark:bg-gray-900 dark:text-white">
-      <div className="flex items-center justify-between px-3 py-3 mx-auto max-w-7xl">
+    <nav className="sticky z-50 max-w-full mx-auto text-gray-900 transition-colors duration-300 shadow rounded-b-4xl top-2 backdrop-blur">
+      <div className="flex items-center justify-between px-3 py-3 mx-auto max-w-11/12">
         <Link to="/" className="text-2xl font-bold text-green-600 dark:text-green-400">
           🌱 PlantCare
         </Link>
 
-        <div className="items-center hidden gap-4 md:flex">
+        <div className="items-center hidden gap-4 text-lg text-green-400 md:flex">
           {navLinks}
-          {/* Theme Toggle */}
+
+          {/* Theme Toggle Button */}
           <button
             onClick={toggleTheme}
-            className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
+            className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
+            aria-label="Toggle Theme"
           >
             {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
           </button>
@@ -117,7 +128,7 @@ const Navbar = () => {
               />
               <button
                 onClick={handleLogout}
-                className="px-3 py-1 text-lg font-semibold text-white bg-green-600 rounded hover:bg-red-500"
+                className="px-3 py-1 text-lg font-semibold text-white bg-green-600 rounded-full hover:bg-red-500 hover:font-bold"
               >
                 LogOut
               </button>
@@ -126,13 +137,13 @@ const Navbar = () => {
             <>
               <Link
                 to="/login"
-                className="px-3 py-1 text-sm rounded hover:bg-green-100 dark:hover:bg-green-800"
+                className="text-xl text-white btn btn-info"
               >
                 Login
               </Link>
               <Link
                 to="/register"
-                className="px-3 py-1 text-sm rounded hover:bg-green-100 dark:hover:bg-green-800"
+                className="text-xl font-semibold btn btn-neutral"
               >
                 Register
               </Link>
@@ -145,6 +156,7 @@ const Navbar = () => {
           <button
             onClick={toggleTheme}
             className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
+            aria-label="Toggle Theme"
           >
             {theme === 'light' ? <Moon size={22} /> : <Sun size={22} />}
           </button>
@@ -155,7 +167,7 @@ const Navbar = () => {
       </div>
 
       {isMenuOpen && (
-        <div className="px-4 pb-4 space-y-2 md:hidden">
+        <div className="px-4 pb-4 space-y-2 font-semibold text-green-700 md:hidden">
           {navLinks}
           {user ? (
             <div className="flex items-center gap-2">
@@ -167,7 +179,7 @@ const Navbar = () => {
               />
               <button
                 onClick={handleLogout}
-                className="px-3 py-1 text-lg font-semibold text-white bg-green-600 rounded hover:bg-red-500"
+                className="px-3 py-1 text-lg font-semibold text-white bg-green-600 rounded-full hover:bg-red-500"
               >
                 LogOut
               </button>
@@ -176,13 +188,13 @@ const Navbar = () => {
             <div className="flex flex-col gap-2">
               <Link
                 to="/login"
-                className="px-3 py-1 text-sm rounded hover:bg-green-100 dark:hover:bg-green-800"
+                className="text-xl text-white btn btn-info"
               >
                 Login
               </Link>
               <Link
                 to="/register"
-                className="px-3 py-1 text-sm rounded hover:bg-green-100 dark:hover:bg-green-800"
+                 className="text-xl font-semibold btn btn-neutral"
               >
                 Register
               </Link>

@@ -12,6 +12,8 @@ import {
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
 import { Helmet } from "react-helmet";
+import registerLottie from '../assets/lotties/register.json'
+import Lottie from "lottie-react";
 
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
@@ -67,11 +69,12 @@ const Register = () => {
   };
 
   return (
-    <section className="flex items-center justify-center min-h-screen px-4 py-12 bg-gradient-to-br from-lime-50 to-green-100 dark:from-green-900 dark:to-green-800">
+    <div className="flex items-center justify-center min-h-screen px-4 py-12 bg-gradient-to-br from-lime-50 to-green-100 dark:from-green-900 dark:to-green-800">
       <Helmet>
         <title>Registration Page</title>
       </Helmet>
-      <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-xl dark:bg-green-950 rounded-xl">
+      <div className="flex">
+        <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-xl dark:bg-green-950 rounded-xl">
         <h2 className="text-2xl font-bold text-center text-green-700 dark:text-lime-200">Create an Account</h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -165,7 +168,9 @@ const Register = () => {
           <a href="/login" className="text-lime-600 hover:underline">Login</a>
         </p>
       </div>
-    </section>
+      <div className="max-h-1/2"><Lottie animationData={registerLottie} loop={true}/></div>
+      </div>
+    </div>
   );
 };
 
