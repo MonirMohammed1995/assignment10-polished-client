@@ -10,6 +10,7 @@ import UpdatePlant from "../pages/UpdatePlant";
 import Error404 from "../pages/Error404";
 import PrivateRoute from "./PrivateRoute";
 import MainLayouts from "../layouts/MainLayouts";
+import DashboardLayout from "../pages/Dashboard/DashboardLayout";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,25 @@ const router = createBrowserRouter([
         path: "/all-plants",
         loader:()=>fetch('https://plantcare-tracker-server.vercel.app/plants'), 
         element: <AllPlants /> 
+      },
+      {
+        path:"/dashboard",
+        element:<PrivateRoute><DashboardLayout/></PrivateRoute>,
+        children:[
+          {
+            path:'/dashboard/my-plants',
+            element:<MyPlants/>
+          },
+          {
+            path:'/dashboard/add-plant',
+            element:<AddPlant/>
+          },
+          {
+            path:'/dashboard/all-plants',
+            loader:()=>fetch('https://plantcare-tracker-server.vercel.app/plants'),
+            element:<AllPlants/>
+          },
+        ]
       },
       {
         path: "/add-plant",

@@ -66,6 +66,18 @@ const Navbar = () => {
       >
         All Plants
       </NavLink>
+      <NavLink
+        to="/dashboard"
+        className={({ isActive }) =>
+          `px-4 py-2 block rounded ${
+            isActive
+              ? 'bg-green-100 dark:bg-green-200 font-semibold rounded-full'
+              : 'hover:bg-green-100 dark:hover:bg-green-200 rounded-full'
+          }`
+        }
+      >
+        Dashboard
+      </NavLink>
 
       {user && (
         <>
